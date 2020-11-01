@@ -1,0 +1,26 @@
+/*
+시리얼 모니터에 입력한 값(1~180)대로 서보모터를 움직이는 코드
+ */
+
+#include <Servo.h>
+Servo myservo;
+int input = 0; //서보모터 각도를 입력받을 변수
+
+void setup()
+{
+ Serial.begin(9600); //시리얼모니터와 통신을 위한 보드레이트를 9600로 설정
+ myservo.attach(9); //서보모터를 디지털 9번 핀에 연결
+ Serial.println("0에서 180 사이의 값을 입력하세요.");
+}
+void loop()
+{
+  if(Serial.available()){
+    input = Serial.parseInt();
+    if(input>=0&&input<=180){
+      Serial.print("각도 : ");
+      Serial.println(input);
+      myservo.write(input);
+      delay(15);
+    }
+  }
+}
